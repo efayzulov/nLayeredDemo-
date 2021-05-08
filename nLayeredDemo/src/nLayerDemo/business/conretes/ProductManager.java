@@ -2,18 +2,23 @@ package nLayerDemo.business.conretes;
 
 import java.util.List;
 
+import nLayerDemo.Core.LoggerService;
 import nLayerDemo.business.abstracts.ProductService;
 import nLayerDemo.dataAccess.abstracts.ProductDao;
 import nLayerDemo.entities.concretes.Product;
 
-public class ProductManager implements ProductService {
+public class ProductManager implements ProductService  {
 	
-	public ProductManager(ProductDao productDao) {
+	private ProductDao ProductDao;
+	private LoggerService loggerService;
+	
+	
+	public ProductManager(ProductDao productDao,LoggerService loggerService) {
 		super();
-		ProductDao = productDao;
+	    this.ProductDao = productDao;
+	    this.loggerService = loggerService;
 	}
 
-	private ProductDao ProductDao;
 
 	@Override
 	public void add(Product product) {
@@ -22,7 +27,8 @@ public class ProductManager implements ProductService {
 			return;
 		}
 		
-		this.ProductDao.add(product);  
+		this.ProductDao.add(product); 
+		this.loggerService.logToSystem("Ürün eklendi : " + product.getName());
 	}
 
 	@Override
